@@ -1,0 +1,976 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Un regalo para ti 🌻</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            overflow: hidden;
+            font-family: "Arial", sans-serif;
+
+            background:
+                radial-gradient(circle at top, #fffde7, #ffe680);
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            text-align: center;
+        }
+
+
+        /* =================================
+           PANTALLA DEL REGALO
+        ================================= */
+
+        .pantalla-regalo {
+
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 100;
+
+            display: flex;
+            flex-direction: column;
+
+            justify-content: center;
+            align-items: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #fffde7,
+                    #ffe681
+                );
+
+            transition:
+                opacity 1s ease,
+                visibility 1s ease;
+        }
+
+        .pantalla-regalo.oculta {
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            pointer-events: none;
+        }
+
+
+        /* =================================
+           ESTRELLAS
+        ================================= */
+
+        .estrella {
+
+            position: absolute;
+
+            color: #ffffff;
+
+            font-size: 22px;
+
+            animation:
+                brillar 2s infinite alternate;
+        }
+
+        .e1 {
+            top: 10%;
+            left: 15%;
+        }
+
+        .e2 {
+            top: 20%;
+            right: 18%;
+
+            animation-delay: .5s;
+        }
+
+        .e3 {
+            bottom: 20%;
+            left: 20%;
+
+            animation-delay: 1s;
+        }
+
+        .e4 {
+            bottom: 15%;
+            right: 15%;
+
+            animation-delay: 1.5s;
+        }
+
+        @keyframes brillar {
+
+            from {
+                opacity: .3;
+                transform: scale(.8);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1.3);
+            }
+        }
+
+
+        /* =================================
+           TEXTO REGALO
+        ================================= */
+
+        .titulo-regalo {
+
+            font-size: 38px;
+
+            color: #b97900;
+
+            margin-bottom: 35px;
+
+            text-shadow:
+                2px 2px 5px white;
+
+            animation:
+                aparecer 1s ease;
+        }
+
+
+        /* =================================
+           SOBRE
+        ================================= */
+
+        .sobre {
+
+            position: relative;
+
+            width: 280px;
+            height: 190px;
+
+            cursor: pointer;
+
+            animation:
+                flotar 3s ease-in-out infinite;
+
+            filter:
+                drop-shadow(
+                    0 12px 10px
+                    rgba(0,0,0,.2)
+                );
+        }
+
+
+        /* Cuerpo del sobre */
+
+        .cuerpo-sobre {
+
+            position: absolute;
+
+            bottom: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100%;
+
+            background:
+                #f6c343;
+
+            border-radius:
+                10px;
+
+            z-index: 1;
+        }
+
+
+        /* Parte interior */
+
+        .interior-sobre {
+
+            position: absolute;
+
+            bottom: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100%;
+
+            background:
+                #ffe994;
+
+            clip-path:
+                polygon(
+                    0 0,
+                    50% 55%,
+                    100% 0,
+                    100% 100%,
+                    0 100%
+                );
+
+            z-index: 2;
+        }
+
+
+        /* Solapa */
+
+        .solapa {
+
+            position: absolute;
+
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 110px;
+
+            background:
+                #eeb52d;
+
+            clip-path:
+                polygon(
+                    0 0,
+                    100% 0,
+                    50% 100%
+                );
+
+            z-index: 4;
+
+            transform-origin: top;
+
+            transition:
+                transform .8s ease;
+        }
+
+
+        /* Corazón */
+
+        .corazon {
+
+            position: absolute;
+
+            top: 73px;
+            left: 50%;
+
+            transform:
+                translateX(-50%);
+
+            font-size: 45px;
+
+            z-index: 5;
+
+            transition:
+                .5s;
+        }
+
+
+        /* =================================
+           BOTÓN
+        ================================= */
+
+        .boton-regalo {
+
+            margin-top: 35px;
+
+            padding: 15px 32px;
+
+            border: none;
+
+            border-radius: 30px;
+
+            background:
+                #e6a900;
+
+            color: white;
+
+            font-size: 18px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 6px 15px
+                rgba(0,0,0,.2);
+
+            transition:
+                .3s;
+        }
+
+        .boton-regalo:hover {
+
+            transform:
+                scale(1.08);
+
+            background:
+                #ce9400;
+        }
+
+
+        /* =================================
+           CONTENIDO PRINCIPAL
+        ================================= */
+
+        .contenido {
+
+            opacity: 0;
+
+            transform:
+                scale(.8);
+
+            transition:
+                1s ease;
+
+            pointer-events: none;
+        }
+
+        .contenido.visible {
+
+            opacity: 1;
+
+            transform:
+                scale(1);
+
+            pointer-events: auto;
+        }
+
+
+        .titulo {
+
+            font-size: 45px;
+
+            color: #d38a00;
+
+            margin-bottom: 10px;
+        }
+
+
+        .texto {
+
+            color: #795500;
+
+            font-size: 20px;
+
+            line-height: 1.6;
+
+            max-width: 600px;
+
+            margin: auto;
+        }
+
+
+        /* =================================
+           RAMO
+        ================================= */
+
+        .ramo {
+
+            position: relative;
+
+            width: 340px;
+
+            height: 400px;
+
+            margin:
+                20px auto 0;
+        }
+
+
+        /* Girasoles */
+
+        .girasol {
+
+            position: absolute;
+
+            font-size: 85px;
+
+            z-index: 5;
+
+            filter:
+                drop-shadow(
+                    2px 5px 3px
+                    rgba(0,0,0,.25)
+                );
+
+            animation:
+                balancear 3s
+                ease-in-out infinite;
+        }
+
+        .girasol1 {
+            top: 0;
+            left: 125px;
+        }
+
+        .girasol2 {
+            top: 45px;
+            left: 30px;
+
+            transform:
+                rotate(-12deg);
+        }
+
+        .girasol3 {
+            top: 45px;
+            right: 30px;
+
+            transform:
+                rotate(12deg);
+        }
+
+        .girasol4 {
+            top: 105px;
+            left: 70px;
+
+            font-size: 78px;
+        }
+
+        .girasol5 {
+            top: 105px;
+            right: 70px;
+
+            font-size: 78px;
+        }
+
+
+        /* =================================
+           TALLOS
+        ================================= */
+
+        .tallo {
+
+            position: absolute;
+
+            width: 8px;
+
+            height: 190px;
+
+            top: 135px;
+
+            background:
+                linear-gradient(
+                    to right,
+                    #286525,
+                    #4d9136
+                );
+
+            border-radius:
+                10px;
+
+            z-index: 2;
+        }
+
+        .tallo1 {
+            left: 165px;
+        }
+
+        .tallo2 {
+            left: 125px;
+
+            transform:
+                rotate(-10deg);
+        }
+
+        .tallo3 {
+            left: 205px;
+
+            transform:
+                rotate(10deg);
+        }
+
+        .tallo4 {
+            left: 145px;
+
+            transform:
+                rotate(-5deg);
+        }
+
+        .tallo5 {
+            left: 185px;
+
+            transform:
+                rotate(5deg);
+        }
+
+
+        /* =================================
+           HOJAS
+        ================================= */
+
+        .hoja {
+
+            position: absolute;
+
+            font-size: 48px;
+
+            z-index: 3;
+        }
+
+        .hoja1 {
+            top: 195px;
+            left: 70px;
+
+            transform:
+                rotate(-35deg);
+        }
+
+        .hoja2 {
+            top: 215px;
+            right: 65px;
+
+            transform:
+                rotate(35deg);
+        }
+
+        .hoja3 {
+            top: 260px;
+            left: 105px;
+
+            transform:
+                rotate(-20deg);
+        }
+
+        .hoja4 {
+            top: 270px;
+            right: 105px;
+
+            transform:
+                rotate(20deg);
+        }
+
+
+        /* =================================
+           ENVOLTURA
+        ================================= */
+
+        .envoltura {
+
+            position: absolute;
+
+            bottom: 0;
+
+            left: 50%;
+
+            transform:
+                translateX(-50%);
+
+            width: 220px;
+
+            height: 160px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #fff3a8,
+                    #dcb83d
+                );
+
+            clip-path:
+                polygon(
+                    10% 0,
+                    90% 0,
+                    100% 100%,
+                    0 100%
+                );
+
+            z-index: 10;
+
+            box-shadow:
+                0 6px 15px
+                rgba(0,0,0,.2);
+        }
+
+
+        .cinta {
+
+            position: absolute;
+
+            bottom: 75px;
+
+            left: 50%;
+
+            transform:
+                translateX(-50%);
+
+            font-size: 42px;
+
+            z-index: 15;
+        }
+
+
+        /* =================================
+           MENSAJE
+        ================================= */
+
+        .mensaje {
+
+            font-size: 40px;
+
+            font-weight: bold;
+
+            color: #d18b00;
+
+            margin-top: -5px;
+
+            text-shadow:
+                1px 2px 4px
+                rgba(0,0,0,.12);
+        }
+
+        .submensaje {
+
+            margin-top: 10px;
+
+            color: #806000;
+
+            font-size: 19px;
+        }
+
+
+        /* =================================
+           ANIMACIONES
+        ================================= */
+
+        @keyframes flotar {
+
+            0%,100% {
+                transform:
+                    translateY(0);
+            }
+
+            50% {
+                transform:
+                    translateY(-12px);
+            }
+        }
+
+
+        @keyframes aparecer {
+
+            from {
+                opacity: 0;
+                transform:
+                    translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform:
+                    translateY(0);
+            }
+        }
+
+
+        @keyframes balancear {
+
+            0%,100% {
+                margin-top: 0;
+            }
+
+            50% {
+                margin-top: -5px;
+            }
+        }
+
+
+        /* =================================
+           CELULARES
+        ================================= */
+
+        @media (max-width: 600px) {
+
+            .titulo-regalo {
+                font-size: 30px;
+            }
+
+            .sobre {
+                width: 240px;
+                height: 165px;
+            }
+
+            .solapa {
+                height: 95px;
+            }
+
+            .corazon {
+                top: 60px;
+            }
+
+            .titulo {
+                font-size: 32px;
+            }
+
+            .texto {
+                font-size: 17px;
+
+                padding:
+                    0 20px;
+            }
+
+            .ramo {
+
+                transform:
+                    scale(.78);
+
+                margin-top:
+                    -25px;
+
+                margin-bottom:
+                    -55px;
+            }
+
+            .mensaje {
+                font-size: 30px;
+            }
+
+            .submensaje {
+                font-size: 16px;
+
+                padding:
+                    0 20px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- =================================
+         PANTALLA DEL REGALO
+    ================================= -->
+
+    <div
+        class="pantalla-regalo"
+        id="pantallaRegalo">
+
+
+        <!-- Estrellas -->
+
+        <div class="estrella e1">✨</div>
+        <div class="estrella e2">✨</div>
+        <div class="estrella e3">✨</div>
+        <div class="estrella e4">✨</div>
+
+
+        <div class="titulo-regalo">
+
+            💌 Tienes una sorpresa 💌
+
+        </div>
+
+
+        <!-- SOBRE -->
+
+        <div
+            class="sobre"
+            id="sobre"
+            onclick="abrirRegalo()">
+
+
+            <div class="cuerpo-sobre"></div>
+
+            <div class="interior-sobre"></div>
+
+            <div
+                class="solapa"
+                id="solapa">
+            </div>
+
+            <div class="corazon">
+                💛
+            </div>
+
+        </div>
+
+
+        <button
+            class="boton-regalo"
+            onclick="abrirRegalo()">
+
+            🌻 Abrir regalo 🌻
+
+        </button>
+
+
+    </div>
+
+
+    <!-- =================================
+         CONTENIDO DESPUÉS DE ABRIR
+    ================================= -->
+
+    <div
+        class="contenido"
+        id="contenido">
+
+
+        <div class="titulo">
+
+            🌻 Para ti 🌻
+
+        </div>
+
+
+        <div class="texto">
+
+            Porque una persona especial
+            merece un detalle especial. 💛
+
+        </div>
+
+
+        <!-- =================================
+             RAMO DE GIRASOLES
+        ================================= -->
+
+        <div class="ramo">
+
+
+            <!-- Girasoles -->
+
+            <div class="girasol girasol1">
+                🌻
+            </div>
+
+            <div class="girasol girasol2">
+                🌻
+            </div>
+
+            <div class="girasol girasol3">
+                🌻
+            </div>
+
+            <div class="girasol girasol4">
+                🌻
+            </div>
+
+            <div class="girasol girasol5">
+                🌻
+            </div>
+
+
+            <!-- Tallos -->
+
+            <div class="tallo tallo1"></div>
+            <div class="tallo tallo2"></div>
+            <div class="tallo tallo3"></div>
+            <div class="tallo tallo4"></div>
+            <div class="tallo tallo5"></div>
+
+
+            <!-- Hojas -->
+
+            <div class="hoja hoja1">
+                🍃
+            </div>
+
+            <div class="hoja hoja2">
+                🍃
+            </div>
+
+            <div class="hoja hoja3">
+                🍃
+            </div>
+
+            <div class="hoja hoja4">
+                🍃
+            </div>
+
+
+            <!-- Envoltura -->
+
+            <div class="envoltura"></div>
+
+
+            <!-- Cinta -->
+
+            <div class="cinta">
+                🎀
+            </div>
+
+        </div>
+
+
+        <!-- MENSAJE -->
+
+        <div class="mensaje">
+
+            Estas son para ti 💛
+
+        </div>
+
+
+        <div class="submensaje">
+
+            🌻 Espero que te alegren el día 🌻
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =================================
+         JAVASCRIPT
+    ================================= -->
+
+    <script>
+
+        function abrirRegalo() {
+
+            const pantalla =
+                document.getElementById(
+                    "pantallaRegalo"
+                );
+
+            const contenido =
+                document.getElementById(
+                    "contenido"
+                );
+
+            const solapa =
+                document.getElementById(
+                    "solapa"
+                );
+
+
+            /* Abrir sobre */
+
+            solapa.style.transform =
+                "rotateX(180deg)";
+
+
+            /* Esperar un momento */
+
+            setTimeout(function() {
+
+                pantalla.classList.add(
+                    "oculta"
+                );
+
+                contenido.classList.add(
+                    "visible"
+                );
+
+            }, 700);
+
+        }
+
+    </script>
+
+
+</body>
+</html>
+
